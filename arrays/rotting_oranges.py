@@ -9,6 +9,13 @@ class CellState(IntEnum):
         EXPLORED = 4
 
 class Solution:
+    """
+        The premise here is we will iterate over the grid and in each iteration we explore a rotten cell , mark it's adjacent neighbors for rotting
+        At the end of the iteration we set the rotting cell state to rotten.
+        We also try to improve efficiency by only exploring rotten cells that have not been visited in prior iterations
+        We are using the CellState enum to keep track of the cell state.
+        We know that there are quarantined fresh oranges if we discover them , however they do not make it to the rotting state.
+    """
     def orangesRotting(self, grid: List[List[int]]) -> int:
         minutes = 0
         fresh_oranges = False
