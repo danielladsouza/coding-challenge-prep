@@ -38,11 +38,6 @@ def lca(tree: BinaryTreeNode, node0: BinaryTreeNode,
     result = lca_helper(tree, node0, node1)
     return result.ancestor
 
-    
-
-
-    return None
-
 
 @enable_executor_hook
 def lca_wrapper(executor, tree, key1, key2):
