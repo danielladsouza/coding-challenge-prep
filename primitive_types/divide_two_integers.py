@@ -2,18 +2,18 @@
 
 class Solution():
     def quotient(self, a:int, b:int) -> int:
-        print(bin(a), bin(b))
+        #print(bin(a), bin(b))
         a_neg = False
         b_neg = False
 
         x = a
         if a < 0:
-            x = ~a
+            x = -a
             a_neg = True
 
         y = b 
         if y < 0:
-            y = ~b
+            y = -b
             b_neg = True
 
         if y == 0:
@@ -33,11 +33,11 @@ class Solution():
             q += 1 << k
             #print(x, q, k)
 
-        if a_neg and not b_neg:
+        if (a_neg and not b_neg) or (b_neg and not a_neg):
             q = -q
         return q
 
 s = Solution()
-result = s.quotient(-7, 3)
+result = s.quotient(0, -3)
 
 print(result)
