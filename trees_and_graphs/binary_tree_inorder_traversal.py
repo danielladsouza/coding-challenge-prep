@@ -24,3 +24,20 @@ class Solution:
         result = []
         helper(root, result)
         return result
+
+    def inorderTraversal_2(self, root: TreeNode) -> List[int]:
+        result = []
+        
+        inorder = [(root, False)]
+        
+        while inorder:
+            node, leftsubtree_processed = inorder.pop()
+            if node:
+                if leftsubtree_processed:
+                    result.append(node.val)
+                else:
+                    inorder.append((node.right, False))
+                    inorder.append((node, True))
+                    inorder.append((node.left, False))
+                                   
+        return result
