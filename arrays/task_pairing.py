@@ -9,6 +9,7 @@ def optimum_task_assignment(task_duration: List)-> List[PairedTasks]:
 
     return [
         # Assumes we have an even number of tasks
+        # Uses 1's complement to iterate through list from either end
         PairedTasks(task_duration[i], task_duration[~i]) for i in range(len(task_duration) // 2)
     ]
 
