@@ -1,7 +1,7 @@
 # EPI 17.2
 from typing import List
 
-def min_waiting_time(service_time : List[int])-> int:
+def min_waiting_time1(service_time : List[int])-> int:
 # Given a schedule of service times, we will sort the list
 # Return the minimum waiting time
     waiting_time = [0]    # Space Complexity O(N)
@@ -19,6 +19,20 @@ def min_waiting_time(service_time : List[int])-> int:
        total_waiting_time += waiting_time[i]
 
     return(total_waiting_time)
+
+"""
+Time Complexity O(N) .. N is the number of services
+Space Complexity O(1)
+"""
+def min_waiting_time(service_time : List[int])-> int:
+    service_time.sort()
+    total_waiting_time = 0
+
+    for i, service in enumerate(service_time):
+        services_impacted = len(service_time) - (i + 1)
+        total_waiting_time += services_impacted * service
+    
+    return total_waiting_time
 
 wait_time = min_waiting_time([2,5,1,3])
 print(wait_time)
