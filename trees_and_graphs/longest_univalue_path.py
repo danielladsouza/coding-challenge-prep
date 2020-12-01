@@ -1,12 +1,15 @@
 # L.C. 687. Longest Univalue Path - https://leetcode.com/problems/longest-univalue-path/
 
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+
 from collections import namedtuple
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
 class Solution:
     def __init__(self):
         self.max_path = 0
