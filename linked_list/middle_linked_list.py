@@ -52,7 +52,20 @@ class Solution:
 # On every "fast" iteration move "slow" pointer 1 step right.
 # When "fast" reaches the end of the linked list, "head" will be the middle.
 # Time: O(n)
-# Space: O(1)
+# Space: O(1)  - Improves on Space Complexity
+# Since fast advances 2 steps ahead, by the time it reaches the end of the sequence, slow is 1/2 steps behind. giving you the middle node
+# at slow
+"""
+[1,2,3,4,5,6,7,8,9,10,11]
+
+fast slow
+1     1
+3     2
+5     3
+7     4
+9     5
+11    6
+"""
 def middleNode_2(self, head: ListNode) -> ListNode:
         
     slow = fast = head
