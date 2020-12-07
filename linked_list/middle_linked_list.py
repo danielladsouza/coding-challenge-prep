@@ -44,3 +44,21 @@ class Solution:
         count = self.precompute_nodes(head)
         middle_index = self.calculate_middle_index(count)
         return self.cache[middle_index]
+
+
+# Solution 2
+# Solution:
+# Define a "fast" pointer which will iterate 2 steps at a time over the linked list.
+# On every "fast" iteration move "slow" pointer 1 step right.
+# When "fast" reaches the end of the linked list, "head" will be the middle.
+# Time: O(n)
+# Space: O(1)
+def middleNode_2(self, head: ListNode) -> ListNode:
+        
+    slow = fast = head
+    
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        
+    return slow
