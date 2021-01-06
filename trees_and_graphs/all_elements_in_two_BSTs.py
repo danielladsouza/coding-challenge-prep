@@ -1,26 +1,41 @@
+# LC 1305 - All Elements in Two Binary Search Trees
+# https://leetcode.com/problems/all-elements-in-two-binary-search-trees/
+
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+from typing import List
+
+
+class TreeNode:
+     def __init__(self, val=0, left=None, right=None):
+         self.val = val
+         self.left = left
+         self.right = right
+
+
 class Solution:
-    def inorder_traversal(self, root:TreeNode) -> List[int]:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def inorder_traversal(root:TreeNode) -> List[int]:
         result = []
 
-        def helper(root:TreeNode, result) :
-            if not root:
+        def helper(node: TreeNode):
+            # Base Case
+            if not node:
                 return
 
-            helper(root.left, result)
-            result.append(root.val)
-            helper(root.right, result)
-            
-        helper(root, result)
+            helper(node.left)
+            result.append(node.val)
+            helper(node.right)
+
+        # Call the helper recursive function
+        helper(root)
         print(result)
         return result
-        
-    def merge_lists(self, l1, l2) -> List[int]:
+
+    @staticmethod
+    def merge_lists(l1, l2) -> List[int]:
         if len(l1) == 0:
             return l2
 
@@ -38,7 +53,7 @@ class Solution:
 
         result = []
 
-        while i<m and j < n:
+        while i < m and j < n:
             if l1[i] <= l2[j]:
                 result.append(l1[i])
                 i += 1
@@ -56,7 +71,17 @@ class Solution:
 
         return result
 
-    def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+    def get_all_elements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+        # Test for edge cases
+        if root1 and not root2:
+            return []
+
+        if not root1:
+            return self.inorder_traversal(root2)
+
+        if not root2:
+            return self.inorder_traversal(root1)
+
         l1 = self.inorder_traversal(root1)
         
         l2 = self.inorder_traversal(root2)
@@ -64,4 +89,3 @@ class Solution:
         l3 = self.merge_lists(l1, l2)
 
         return l3
-        
