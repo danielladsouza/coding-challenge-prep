@@ -74,7 +74,7 @@ class Solution:
     @staticmethod
     def get_all_elements(root1: TreeNode, root2: TreeNode) -> List[int]:
         # Test for edge cases
-        if root1 and not root2:
+        if not all([root1, root2]):
             return []
 
         if not root1:
@@ -90,4 +90,8 @@ class Solution:
         l3 = merge_lists(l1, l2)
 
         return l3
+
+
+r = Solution.get_all_elements(None, None)
+print(r)
 
