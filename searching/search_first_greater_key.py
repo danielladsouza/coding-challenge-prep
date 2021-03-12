@@ -7,6 +7,11 @@ from typing import List
 
 
 def search_first_greater_key(arr: List[int], key: int) -> int:
+    """
+        Time Complexity O(logn)
+        Space Complexity O(1)
+    """
+
     left, right, result = 0, len(arr) -1, -1
 
     while left <= right:
