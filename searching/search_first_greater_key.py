@@ -20,10 +20,15 @@ def search_first_greater_key(arr: List[int], key: int) -> int:
     return result
 
 
-A = [-14, -10, 2, 108, 108, 243, 285, 285, 285, 401]
+A = [-14, -10, 2, 109, 110, 243, 285, 285, 285, 401]
+
 assert (search_first_greater_key(A, 285) == 9)
 
 assert (search_first_greater_key(A, -13) == 1)
+
+assert (search_first_greater_key(A, 255) == 6)
+
+assert (search_first_greater_key(A, 108) == 3)
 
 
 
