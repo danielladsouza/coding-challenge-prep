@@ -2,26 +2,18 @@
     LC 23. Merge k Sorted Lists
     https://leetcode.com/problems/merge-k-sorted-lists/
 
-    CAVEAT - Unable to modify ListNode class in leetcode
-    Hence this solution throws an error with regards to comparing two ListNode
-    classes
+    New solution assuming we cannot modify the LeetCode class.
+
+    To deal with the problems of sort stability and elements with equal priority
+    (equal values), the solution is to have each element in the heapq be a tuple
+    with the priority, an entry count and the element (ListNode) to be inserted. The entry
+    count ensures that elements with the same priority are sorted in the order they
+    were added to the heapq.
+
 """
 
 import heapq
-
-
 from typing import List, Tuple
-
-
-class ListNode(object):
-
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-    # Custom compare method
-    def __lt__(self, other):
-        return self.val < other.val
 
 
 class Solution:
@@ -35,23 +27,27 @@ class Solution:
 
         # Have each element on the heap as a tuple, to customize the heap order
         # min_heap: List[Tuple[int, ListNode]] = []
-        min_heap: List[ListNode] = []
+        min_heap: List[Tuple[int, int, ListNode]] = []
+
         heapq.heapify(min_heap)
 
+        count = 0
         for head in lists:
-            # heapq.heappush(min_heap, (head.val, head))
-            heapq.heappush(min_heap, head)
+            count += 1
+            heapq.heappush(min_heap, (head.val, count, head))
 
         dummy_head = tail = ListNode()
 
         while min_heap:
-            smallest_element = heapq.heappop(min_heap)
+            _, _, smallest_element = heapq.heappop(min_heap)
             tail.next = smallest_element
-
             next_element = smallest_element.next
             if next_element is not None:
-                heapq.heappush(min_heap, next_element)
+                count += 1
+                heapq.heappush(min_heap, (next_element.val, count,
+                                          next_element))
             tail = tail.next
 
         return dummy_head.next
+
 
