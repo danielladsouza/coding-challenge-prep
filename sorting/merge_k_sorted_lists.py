@@ -22,8 +22,13 @@ class Solution:
         n - total number of nodes
         k - length of the matrix / number of rows
         Space Complexity - O(k)
+
+        https://amir.rachum.com/blog/2012/08/25/you-cant-handle-the-truth/
+
     """
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return None
 
         # Have each element on the heap as a tuple, to customize the heap order
         # min_heap: List[Tuple[int, ListNode]] = []
@@ -33,8 +38,9 @@ class Solution:
 
         count = 0
         for head in lists:
-            count += 1
-            heapq.heappush(min_heap, (head.val, count, head))
+            if head is not None:
+                count += 1
+                heapq.heappush(min_heap, (head.val, count, head))
 
         dummy_head = tail = ListNode()
 
@@ -49,5 +55,4 @@ class Solution:
             tail = tail.next
 
         return dummy_head.next
-
 
