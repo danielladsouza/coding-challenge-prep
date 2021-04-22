@@ -1,6 +1,6 @@
 """
-    Implement a method that takes a string representing and integer and return
-    the corresponding integer
+    Implement a method that takes a string representing an integer (base 10)
+    and returns the corresponding integer
     Code should handle negative values
 """
 import string
