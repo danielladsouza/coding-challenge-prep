@@ -16,10 +16,9 @@ def column_encoding(s: str)-> int:
         Time Complexity - O(n)
         Space Complexity - O(1)
     """
-    alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     result = 0
     for c in s:
-        result = result * 26 + alphabets.index(c) + 1
+        result = result * 26 + ord(c) - ord('A') + 1
     return result
 
 
