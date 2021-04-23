@@ -5,7 +5,7 @@
     "D" - 4
     'AA" - 702
 """
-import string
+import functools
 
 
 def column_encoding(s: str)-> int:
@@ -22,11 +22,24 @@ def column_encoding(s: str)-> int:
     return result
 
 
-r = column_encoding('A')
+def column_encoding_fp(s: str)-> int:
+    """
+        There are 26 letters in the alphabet
+        AA - A(26 ** 1) + A(26 ** 0) = 26 + 1 = 27
+        This is a base 26 problem.
+        Time Complexity - O(n)
+        Space Complexity - O(1)
+    """
+    return functools.reduce(
+        lambda result, c: result * 26 + ord(c) - ord('A') + 1,
+        s, 0)
+
+
+r = column_encoding_fp('A')
 print(r)
 r = column_encoding('AA')
 print(r)
-r = column_encoding('ZZ')
+r = column_encoding_fp('ZZ')
 print(r)
 
 
