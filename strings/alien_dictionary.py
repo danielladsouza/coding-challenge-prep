@@ -65,14 +65,13 @@ class Solution:
         if len(words) < 2:
             return True
 
-        order_lookup = dict((c, i) for i, c in enumerate(order))
         prev = words[0]
         match_length = 0
         for current in words[1:]:
             for pair in zip(prev, current):
-                if order_lookup[pair[0]] > order_lookup[pair[1]]:
+                if order.index(pair[0]) > order.index(pair[1]):
                     return False
-                if order_lookup[pair[0]] < order_lookup[pair[1]]:
+                if order.index(pair[0]) < order.index(pair[1]):
                     break
                 match_length += 1
             # Check for end of zip due to unequal lengths of strings
