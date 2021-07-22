@@ -47,33 +47,19 @@
 
 """
 def phoneCall(min1, min2_10, min11, s):
-    """
-        Test case
-        (10,1,2,22) failing
-        Expected - 10
-        Actual - 11
-        10 * 1 + 1 * 9 = 10 minutes
-        22 - (10 + 9) = 3 cents remain
-        3 - (2 * 1) = 1 cent remains
-        result should be 11 minutes
-        
-    """
-    count_min = 0
-    max_min_min2_rate = 0
-    while s:
-        count_min += 1
-        print(count_min)
+    mins = 0
+    if s < min1:
+        return mins
 
-        if count_min == 1:
-            s -= min1
-        elif 2 <= count_min <= 10:
-            max_min_min2_rate = min(9, s // min2_10)
-            s -= (max_min_min2_rate * min2_10)
-            count_min += (max_min_min2_rate - 1)
-            print(s, count_min)
-            continue
-        else:
-            count_min += ((s // min11) - 1)
-            break  # Exhausted all of s
+    mins += 1
+    s -= min1
 
-    return count_min
+    if s < 9 * min2_10:
+        mins += s // min2_10
+        return mins
+
+    mins += 9
+    s -= (9 * min2_10)
+
+    mins += s // min11
+    return mins
