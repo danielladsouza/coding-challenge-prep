@@ -7,12 +7,12 @@
 """
 ASCII_LOWERCASE_CHARS = 26
 
-
 class Node:
     def __init__(self, c: str):
         self.c = c
         self.children = [None] * ASCII_LOWERCASE_CHARS
         self.isWord = False
+        print(c)
 
 
 class WordDictionary:
@@ -30,12 +30,45 @@ class WordDictionary:
         curr = self.root
         for w in word:
             if not curr.children[ord(w) - ord('a')]:
-                curr.children[ord(w) - ord('a')] = Node(w)
-                # Inserting a new node with this character
+                curr.children[ord(w) - ord('a')] = Node(
+                    w)  # Inserting a new node with this character
             curr = curr.children[ord(w) - ord('a')]
         curr.isWord = True
 
     def search(self, word: str) -> bool:
+
+        def getWord(curr, idx, w: str) -> Node:
+            # Base case
+
+            # Sanity check
+            if idx == len(w) or not curr:
+                return False
+
+            # Reached the end of the word
+            if idx == len(w) - 1 and (curr.c == w[idx] or w[idx] == '.'):
+                if curr.isWord:
+                    return True
+
+            # When to return success
+            # When to continue the DFS
+            # when to give up.
+            # Pre order traversal - Root and then children
+
+            if curr.c == '\0':
+                for c in curr.children:
+                    finalNode = getWord(c, idx, w)
+                    if finalNode:
+                        return True
+            elif w[idx] == '.' or curr.c == w[idx]:
+                for c in curr.children:
+                    foundWord = getWord(c, idx + 1, w)
+                    if foundWord:
+                        return True
+
+            return False
+
+        return getWord(self.root, 0, word)
+        """
         curr = self.root
         for w in word:
             if w is '.':
@@ -44,6 +77,7 @@ class WordDictionary:
                 return None
             curr = curr.children[ord(w) - ord('a')]
         return curr.isWord
+        """
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
