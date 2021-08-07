@@ -1,11 +1,66 @@
 # L.C. 748 Shortest Completing Word
-
+import typing
 import string, copy
-from collections import defaultdict
-
+from collections import Counter, defaultdict
 
 class Solution:
+    """
+    O(n * m) time
+    O(1) space
+"""
+    @staticmethod
+    def wordToCounter(word: str) -> Dict:
+        'Keeps track of the count of lowercase letters in a string'
+        wordCount = defaultdict(int)
+        for c in word.lower():
+            if c in string.ascii_lowercase:
+                wordCount[c] += 1
+        return wordCount
+
     def shortestCompletingWord(self, licensePlate: str,
+                               words: List[str]) -> str:
+        result = ""
+
+        licenseCount = Solution.wordToCounter(licensePlate)
+
+        for word in words:  # T.C. O(M) M is the number of words
+            wordCount = Solution.wordToCounter(
+                word)  # T.C. O(N) N is the number of letters in the word
+
+            for letter in string.ascii_lowercase:  # O(26)
+                # Think of iterating over the keys (lowercase letters)
+                # 26 letters
+                if licenseCount[letter] > wordCount[letter]:
+                    break
+            else:  # Good use of for .. else  we have successfully compared all the required letter counts
+                # word is a possible candidate
+                # order is being maintained by the word list
+                # select the shortest of the candidates - len
+                if not result or len(result) > len(word):
+                    result = word
+        return result
+
+    def shortestCompletingWord_2(self, licensePlate: str,
+                               words: List[str]) -> str:
+        result = ""
+        licenseCount = collections.Counter(licensePlate.lower()) # 7 max keys
+
+        for word in words: # O(M)
+            wordCount = collections.Counter(word.lower())  # 1000 max length of a word O(N)
+            for letter in string.ascii_lowercase: # O(26)
+                # Think of iterating over the keys (lowercase letters)
+                # 26 letters
+                if licenseCount[letter] > wordCount[letter]:
+                    break
+            else:
+                # word is a possible candidate
+                # order is being maintained by the word list
+                # select the shortest of the candidates - len
+                if not result or len(result) > len(word):
+                    result = word
+        return result
+
+    def shortestCompletingWord_1(self, licensePlate: str,
                                words: List[str]) -> str:
         # licensePlate
         # Min, Count of the desired characters
