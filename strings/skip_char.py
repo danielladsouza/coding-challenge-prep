@@ -24,7 +24,22 @@ class SkipChar:
             return self.source[self.current_idx] if self.source[self.current_idx] != self.skipchar else self.__next__()
         raise StopIteration
 
-sc = SkipChar("Hello", 'o')
+def skipchar(source, skipchar=''):
+    """
+        This generator will not raise the StopIterator exception.
+        It will just return.
+        Good alternative to avoid the StopIterator exception
+    """
+    current = 0
+    while current < len(source):
+        if source[current] != skipchar:
+            yield source[current]
+        current += 1
+
+for c in skipchar("Hello", 'l'):
+    print(c)
+
+sc = SkipChar("Hello", 'l')
 sc_iter = iter(sc)
 for i in range(10):
     print(next(sc_iter))
