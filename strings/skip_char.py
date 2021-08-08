@@ -1,6 +1,11 @@
-# Skip Character
-# Requirement
+# DC 1. Skip Character
+# Requirements
 # 1.0  Always skip a certain character
+# 2.0 skip a certain character n number of times only (accept a tuple (character, count))
+# 3.0 Avoid generating a StopIterator exception (add support for a default return value if we have reached the end of the iterable
+# 4.0 Provide an alternate implementation using generators
+# 3.0 Make this work on an input stream
+
 class SkipChar:
     def __init__(self, source: str, skipchar: str = ''):
         self.current_idx = -1
