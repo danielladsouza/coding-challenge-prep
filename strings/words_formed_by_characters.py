@@ -1,26 +1,34 @@
 """
     L.C. 1160 - Find Words That Can Be Formed by Characters
+    Naming convention - camelCase for variables, class instance methods
+    Pascal case for classes
+    Prefix the name of the class with the name of the module (namespace)
+    Use descriptive names rather than single letter names
+
+    Input: words = ["cat","bt","hat","tree"], chars = "atach"
+
+    chars is the longer string
 """
-from collections import Counter
 
 class Solution:
     def countCharacters(self, words: List[str], chars: str) -> int:
         """
             T.C. O(Nd) N - count of words
-                       d - length of each word
+                       d - average length of each word
 
-            S.C. O(d) - Counter of chars in w
+            S.C. O(1) - max number of characters is 26, space is fixed
         """
-        charCount = Counter(chars)
+        charCount = collections.Counter(chars)
         result = 0
 
-        for w in words:
-            wCount = Counter(w)
+        for word in words:
+            wordChars = Counter(word)
 
-            for key, value in wCount.items():
-                if charCount[key] < value:
+            for letter, count in wordChars.items():
+                # We do not have enough characters in the main string "chars"
+                if charCount[letter] < count:
                     break
             else:
-                result += len(w)
+                result += len(word)
 
         return result
