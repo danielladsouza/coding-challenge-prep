@@ -14,7 +14,9 @@ class Solution:
     def countCharacters(self, words: List[str], chars: str) -> int:
         """
             T.C. O(Nd) N - count of words
-                       d - average length of each word
+                       d - average length of each word (We are iterating over a max of 26 letters)
+                       In the worst case d is 26
+            T.C. O(N)
 
             S.C. O(1) - max number of characters is 26, space is fixed
         """
