@@ -6,12 +6,10 @@ from typing import List
 
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        # When dealing with sorted arrays, we should use Binary Search
+        # As we are dealing with sorted arrays, we will use Binary Search
         # It brings down the Time complexity to O(log max(m,n))
         # Identify the row in which the number falls
-        # Iterate over column 0 and find i such that row[i][0] <= target <= row[i][0]
-
-        # To search through the m rows, we could use a binary search
+        # Iterate over the rows and find i such that row[i][0] <= target <= row[i][n-1]
         # once we have found the row i, we can identify the column j using a binary search along the row
 
         m, n = len(matrix), len(matrix[0])
@@ -21,10 +19,9 @@ class Solution:
         left, right = 0, m - 1
         i = 0
         while left <= right:
-            i = left + (right - left) // 2
+            i = left + (right - left) // 2   # Prevent overflow
             if matrix[i][0] <= target <= matrix[i][n - 1]:
                 break
-
             if target > matrix[i][n - 1]:
                 left = i + 1
             else:
