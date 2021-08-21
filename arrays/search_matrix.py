@@ -7,7 +7,8 @@ from typing import List
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         # As we are dealing with sorted arrays, we will use Binary Search
-        # It brings down the Time complexity to O(log max(m,n))
+        # It brings down the Time complexity to O(log(m) + log(n)) = O(log(mn))
+        # The logarithm of a product of two quantities is the sum of the logarithms of the two factors.
         # Identify the row in which the number falls
         # Iterate over the rows and find i such that row[i][0] <= target <= row[i][n-1]
         # once we have found the row i, we can identify the column j using a binary search along the row
@@ -28,6 +29,7 @@ class Solution:
                 right = i - 1
 
         left, right = 0, n - 1
+        # Identify j, given i
         j = 0
         while left <= right:
             j = left + (right - left) // 2
