@@ -1,5 +1,5 @@
 """
-    L.C. 283
+    L.C. 283 Move zeroes
 """
 
 class Solution:
@@ -24,7 +24,6 @@ class Solution:
         for n in nums:
             if n:
                 nums[write_index] = n
-
                 write_index += 1
 
         nums[write_index:] = [0] * (len(nums) - write_index)
@@ -35,8 +34,7 @@ class Solution:
         0              0 1 0 3 12
         1              1 1 0 3 12 
         2              1 3 0 3 12  
-        3              1 3 12 3 12
-                              0 
-        4                        0          
+        3              1 3 12 3 12        
+                              0  0          
         """
 
