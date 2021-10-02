@@ -22,8 +22,7 @@ class Solution:
             concat as strings are immutable.
             Lastly to return the final result we again use the reversed() iterator.
 
-            Notice the use of iterators to be more efficient with space.
-            Strings are immutable.
+
         """
         rev_iter1 = reversed(num1)
         rev_iter2 = reversed(num2)
@@ -32,13 +31,13 @@ class Solution:
         c1 = next(rev_iter1, None)
         c2 = next(rev_iter2, None)
 
-        rev_result_list = []
+        rev_result_list = []   # Space will be max(len(num1), len(num2))
 
         while c1 or c2 or carryover:
-            sum = (string.digits.index(c1) if c1 else 0) + (
+            sum_digits = (string.digits.index(c1) if c1 else 0) + (
                 string.digits.index(c2) if c2 else 0) + carryover
-            carryover = sum // 10   # Quotient
-            rev_result_list.append(string.digits[sum % 10])  # Remainder
+            carryover = sum_digits // 10
+            rev_result_list.append(string.digits[sum_digits % 10])
             c1 = next(rev_iter1, None)
             c2 = next(rev_iter2, None)
 
