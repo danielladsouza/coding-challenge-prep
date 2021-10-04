@@ -27,38 +27,39 @@ min_cost = max(1, 1)
 class Solution:
     """
         Algorithm
-        This is using a two iterator approach
-        1. Iterator that enumerates over the string
-        2. Iterator keeping track of the start of a non repeat character sequence
+        "aabaaa"
+        1. Enumerates over the string
+        2. Keeping track of the start of a non repeat character sequence
+        3. Calculate the cost for removal of duplicates when we encounter a different character
+        4. Use a sentinel for the end
         aabaa#
-        |
-          |. |
-        index 0 2 3 5. are positions of non repeat sequence characters
 
         T.C. O(N)
         S.C. O(1)
     """
 
     def minCost(self, s: str, cost: List[int]) -> int:
-        # Delete the chosen characters at the same time
-        current_non_repeat = ""
-        current_non_repeat_idx = 0
+        last_non_repeat_char_idx = 0
+        last_non_repeat_char = ""
+
         min_cost = 0
         s += '#'  # Adding a sentinel character to the end of the string to trigger the calculation of min cost
 
         for idx, c in enumerate(s):
-            if c != current_non_repeat:
-                diff = idx - current_non_repeat_idx
-                if (diff > 1): # Since there could be multiple conscutive repeating characters, we want to evaluate the cost
+            if c != last_non_repeat_char:
+                if (idx - last_non_repeat_char_idx > 1):
+                    # Since there could be multiple conscutive repeating characters, we want to evaluate the cost
                     # only when we encounter a character that is different
-                    # also we add a condition to check that there was at least one other character prior to this one
+                    # and there was at least one other character prior to this one
                     #  ab  vs. aab   , we want to trigger calculation in the second case only
-                    cost_repeat = cost[current_non_repeat_idx: idx]
-                    max_cost = max(cost_repeat)
-                    cost_repeat.remove(max_cost)
-                    min_cost += sum(cost_repeat)
+                    repeat_char_costs = cost[last_non_repeat_char_idx: idx]
+                    most_expensive_char_cost = max(repeat_char_costs)
+                    # We are going to be removing the least expensive characters
+                    # calculat the cost of those.
+                    repeat_char_costs.remove(most_expensive_char_cost)
+                    min_cost += sum(repeat_char_costs)
 
-                current_non_repeat = c
-                current_non_repeat_idx = idx
+                last_non_repeat_char = c
+                last_non_repeat_char_idx = idx
 
         return min_cost
