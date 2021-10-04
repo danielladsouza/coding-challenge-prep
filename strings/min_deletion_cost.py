@@ -49,7 +49,10 @@ class Solution:
         for idx, c in enumerate(s):
             if c != current_non_repeat:
                 diff = idx - current_non_repeat_idx
-                if (diff > 1):
+                if (diff > 1): # Since there could be multiple conscutive repeating characters, we want to evaluate the cost
+                    # only when we encounter a character that is different
+                    # also we add a condition to check that there was at least one other character prior to this one
+                    #  ab  vs. aab   , we want to trigger calculation in the second case only
                     cost_repeat = cost[current_non_repeat_idx: idx]
                     max_cost = max(cost_repeat)
                     cost_repeat.remove(max_cost)
