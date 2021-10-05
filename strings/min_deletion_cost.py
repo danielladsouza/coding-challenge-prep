@@ -63,3 +63,40 @@ class Solution:
                 last_non_repeat_char_idx = idx
 
         return min_cost
+
+
+    def minCost_2(self, s: str, cost: List[int]) -> int:
+        last_non_repeat_char_idx = 0
+        last_non_repeat_char = ""
+
+        min_cost = 0
+        s += '#'  # Adding a sentinel character to the end of the string to trigger the calculation of min cost
+        cost.append(0) # Likewise for cost
+
+        local_sum = 0
+        local_max = 0
+
+        for idx, c in enumerate(s):
+            if c != last_non_repeat_char:
+                if (idx - last_non_repeat_char_idx > 1):
+                    # Since there could be multiple conscutive repeating characters, we want to evaluate the cost
+                    # only when we encounter a character that is different
+                    # and there was at least one other character prior to this one
+                    #  ab  vs. aab   , we want to trigger calculation in the second case only
+                    # cost_repeat = cost[last_non_repeat_char_idx: idx]
+                    # max_cost = max(cost_repeat)
+                    # cost_repeat.remove(max_cost)
+                    # min_cost += sum(cost_repeat)
+                    min_cost += (local_sum - local_max)
+
+                local_sum = 0
+                local_max = 0
+
+                last_non_repeat_char = c
+                last_non_repeat_char_idx = idx
+
+            local_sum += cost[idx]
+            if cost[idx] > local_max:
+                local_max = cost[idx]
+
+        return min_cost
