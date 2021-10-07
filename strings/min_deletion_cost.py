@@ -22,7 +22,13 @@ current_nonrepeating_char
 
 a       [1, 1] .. When I encounter a different character, I process the list
 min_cost = max(1, 1)
+
+Read
+Lint
+Unit Test
+Timeit - https://www.geeksforgeeks.org/timeit-python-examples/
 """
+import timeit
 
 class Solution:
     """
@@ -53,6 +59,12 @@ class Solution:
                     # and there was at least one other character prior to this one
                     #  ab  vs. aab   , we want to trigger calculation in the second case only
                     repeat_char_costs = cost[last_non_repeat_char_idx: idx]
+
+                    """
+                    Slicing a list takes time and space proportionaly to idx - last_non_repeat_char_idx
+                    a new and independent object is created.
+                    Memory consumed is proportional to the len(sequence) ** 2 - quadratic
+                    """
                     most_expensive_char_cost = max(repeat_char_costs)
                     # We are going to be removing the least expensive characters
                     # calculat the cost of those.
@@ -64,37 +76,40 @@ class Solution:
 
         return min_cost
 
+    """
+        Solution 2 - Avoids Python slicing - https://stackoverflow.com/questions/509211/understanding-slice-notation
+    """
+        """
+                Algorithm
+                This is using a two pointer approach
+                1. numerates over the string
+                2. Keeos track of the start of a new sequence of repeating characters
+                       "aabaa#"
+                cost - [1,2,3,4,5,0]
+                |
+                  |. |
+                index 0 2 3 5. are positions of non repeat sequence characters
+            """
 
     def minCost_2(self, s: str, cost: List[int]) -> int:
-        last_non_repeat_char_idx = 0
-        last_non_repeat_char = ""
+        seq_start_idx, min_cost = -1, 0
 
-        min_cost = 0
         s += '#'  # Adding a sentinel character to the end of the string to trigger the calculation of min cost
-        cost.append(0) # Likewise for cost
+        cost += [0]  # Likewise for cost
 
-        local_sum = 0
-        local_max = 0
+        local_sum, local_max = 0, 0
 
         for idx, c in enumerate(s):
-            if c != last_non_repeat_char:
-                if (idx - last_non_repeat_char_idx > 1):
+            if c != s[seq_start_idx]:
+                if (idx - seq_start_idx) > 1:
                     # Since there could be multiple conscutive repeating characters, we want to evaluate the cost
                     # only when we encounter a character that is different
                     # and there was at least one other character prior to this one
                     #  ab  vs. aab   , we want to trigger calculation in the second case only
-                    # cost_repeat = cost[last_non_repeat_char_idx: idx]
-                    # max_cost = max(cost_repeat)
-                    # cost_repeat.remove(max_cost)
-                    # min_cost += sum(cost_repeat)
                     min_cost += (local_sum - local_max)
 
-                local_sum = 0
-                local_max = 0
-
-                last_non_repeat_char = c
                 last_non_repeat_char_idx = idx
-
+                local_sum, local_max = 0, 0
             local_sum += cost[idx]
             if cost[idx] > local_max:
                 local_max = cost[idx]
