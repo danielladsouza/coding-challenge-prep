@@ -6,6 +6,7 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     # Definition for a binary tree node.
     # class TreeNode:
