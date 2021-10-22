@@ -48,8 +48,12 @@ class Solution:
 
         return diameter_tree
 
-    def diameterOfBinaryTree_rec(self, root: Optional[TreeNode]) -> int:
-        diameter_tree = 0
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        """
+            In Python integers are immutable types
+        """
+
+        diameter_tree = 0  # Outer Function scope declaration
         # S.C. - O(N) - Unbalanced
         #        O(logN)  Balanced
 
@@ -66,7 +70,19 @@ class Solution:
             # 1. The diameter with this node as the root of the subtree
             local_diameter = left_subtree_longest_path + right_subtree_longest_path
 
+            # When we are assigning a value to diameter_tree, a new local variable diameter_tree is getting created
+            # This is a new variable, different fromt the diameter_tree in the outer scope
+            # If we want to be able to use the variable from the outer scope, we need to specifically tell the Interpreter, this
+            # is a nonlocal variable.
+            # This assignment could cause a new variable to be created, it would be treated as a local variable
+            # The Python interpreter sees this at module load time and decides that the global scope's diameter_tree should not be used inside
+            # the local scope.
+
+            # This is a question of scope.
+            # We will have a scoping issue if we do not use the nonlocal keyword for diameter_tree
+            #                       |   <--- this is a local variable in postorder() , but the Python interpreter is unable to see where it was declared
             diameter_tree = max(diameter_tree, local_diameter)
+
 
             # 2. The longest path from a leaf node passing through this node
             return max(left_subtree_longest_path, right_subtree_longest_path) + 1
